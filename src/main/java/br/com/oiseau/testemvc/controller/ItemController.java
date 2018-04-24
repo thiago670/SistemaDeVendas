@@ -41,5 +41,31 @@ public class ItemController {
 	public String formularioAdicionaItem() {
 		return "item/AdicionaFormulario";
 	}
-		
+	
+	@RequestMapping(value="ListaItens", method=RequestMethod.GET)
+	public String ListaItens(Model model) {
+		ItemDao itemDao=new ItemDao();
+		model.addAttribute("itens",itemDao.getLista());
+		return "item/ListaItens";
+	}
+	
+	@RequestMapping(value="RemoveItem", method=RequestMethod.GET)
+	public String RemoveItem(Item item) {
+		ItemDao itemDao=new ItemDao();
+		itemDao.exclui(item);
+		return "redirect:ListaItens";
+	}
+	
+	@RequestMapping(value="MostraItem", method=RequestMethod.GET)
+	public String MostrarItem(Item item, Model model) {
+		ItemDao itemDao=new ItemDao();
+		model.addAttribute("item",itemDao.buscaPorId(item.getId()));
+		return "item/MostraItem";
+	}
+	@RequestMapping(value="AtualizaItem", method=RequestMethod.POST)
+	public String AtualizaItem(Item item) {
+		ItemDao itemDao=new ItemDao();
+		itemDao.atualiza(item);
+		return "redirect:ListaItens";
+	}
 }

@@ -1,23 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@	taglib	uri="http://www.springframework.org/tags/form"	prefix="form"	%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@	taglib	uri="http://www.springframework.org/tags/form"	prefix="form"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<c:import url = "../layout/header.jsp"/>
+
+<a	href="ListaItens">Mostrar Itens</a>
+
 	<form:errors path="item.nome" cssStyle="color:red"/>
 	<form action="AdicionaItem" method="post">
 		<p>
 			Nome: <input type="text" name="nome"/>
 		</p>
 		<p>
-			Descri√ß√£o:<textarea name="descricao" rows="10" cols="30"></textarea>
+			DescriÁ„o:<textarea name="descricao" rows="10" cols="30"></textarea>
 		</p>
 
 		<p>
-			Pre√ßo Unit√°rio: <input type="text" name="precoUnitario"/>
+			PreÁo: <input type="text" name="valor"/>
 		</p>
 
 		<p>
@@ -31,5 +29,4 @@
 		<br /> <input type="submit" value="Adicionar">
 	</form>
 
-</body>
-</html>
+<c:import url = "../layout/footer.jsp"/>

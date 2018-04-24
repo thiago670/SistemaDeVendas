@@ -23,12 +23,12 @@ public class ItemDao {
 
 	public void adiciona(Item item) {
 		try {
-			String sql = "insert into itens (nome, descricao, precoUnitario, tipo) values (?,?,?,?)";
+			String sql = "insert into itens (nome, descricao, valor, tipo) values (?,?,?,?)";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, item.getNome());
 			stmt.setString(2, item.getDescricao());
-			stmt.setBigDecimal(3, item.getPrecoUnitario());
+			stmt.setBigDecimal(3, item.getValor());
 			stmt.setString(4, item.getTipo());
 
 			stmt.execute();
@@ -48,9 +48,10 @@ public class ItemDao {
 			while(rs.next()) {
 				Item item = new Item();
 				//popula o objeto contato
+				item.setId(rs.getInt("id"));
 				item.setNome(rs.getString("nome"));
 				item.setDescricao(rs.getString("descricao"));
-				item.setPrecoUnitario(rs.getBigDecimal("precoUnitario"));
+				item.setValor(rs.getBigDecimal("valor"));
 				item.setTipo(rs.getString("tipo"));
 
 				//adiciona o contato na lista
@@ -78,12 +79,12 @@ public class ItemDao {
 	}
 
 	public void atualiza(Item item) {
-		String sql = "update itens set nome = ?, descricao = ?, precoUnitario = ?, tipo = ? where id = ?";
+		String sql = "update itens set nome = ?, descricao = ?, valor = ?, tipo = ? where id = ?";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, item.getNome());
 			stmt.setString(2, item.getDescricao());
-			stmt.setBigDecimal(3, item.getPrecoUnitario());
+			stmt.setBigDecimal(3, item.getValor());
 			stmt.setString(4, item.getTipo());
 			stmt.setLong(5, item.getId());
 
@@ -92,4 +93,34 @@ public class ItemDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public Item buscaPorId(long id) {
+		try {
+			PreparedStatement stmt = this.connection.prepareStatement("select * from itens where id="+id);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			/*
+			 * Inserir regra de tratamento no caso de não encontrar o Id informado.
+			 */
+				
+				Item item = new Item();
+				
+				//popula o objeto contato
+				item.setId(rs.getInt("id"));
+				item.setNome(rs.getString("nome"));
+				item.setDescricao(rs.getString("descricao"));
+				item.setValor(rs.getBigDecimal("valor"));
+				item.setTipo(rs.getString("tipo"));
+				
+			rs.close();
+			stmt.close();
+			
+			return item;
+				
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+	}
+	
 }

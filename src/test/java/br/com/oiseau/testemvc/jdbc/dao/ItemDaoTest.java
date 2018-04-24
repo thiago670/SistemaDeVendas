@@ -16,7 +16,7 @@ public class ItemDaoTest {
 		Item item =new Item();
 		item.setNome("Teste");
 		item.setDescricao("Unitário");
-		item.setPrecoUnitario(new BigDecimal("15.0"));
+		item.setValor(new BigDecimal("15.0"));
 		item.setTipo("Roupa");
 				
 		ItemDao itemDao = new ItemDao();
@@ -38,7 +38,7 @@ public class ItemDaoTest {
 					"Id: "+c.getId()+
 					"\nNome: "+ c.getNome()+
 					"\nDescrição: "+c.getDescricao()+
-					"\nPreço Unitário: "+c.getPrecoUnitario()+
+					"\nPreço Unitário: "+c.getValor()+
 					"\nTipo: "+c.getTipo()+"\n");
 		});
 		
@@ -70,13 +70,23 @@ public class ItemDaoTest {
 		
 		item.setNome("Anel");
 		item.setDescricao("de Ouro");
-		item.setPrecoUnitario(new BigDecimal("12.35"));
+		item.setValor(new BigDecimal("12.35"));
 		item.setTipo("Bijoux");
 		
 		ItemDao itemDao=new ItemDao();
 		itemDao.atualiza(item);
 		
 		System.out.println("Item Atualizado!");
+	}
+	
+	@Test
+	public void deveBuscarPorId() {
+
+		ItemDao itemDao = new ItemDao();
+		Item c = itemDao.buscaPorId(1);
+
+		System.out.println("Id: " + c.getId() + "\nNome: " + c.getNome() + "\nDescrição: " + c.getDescricao()
+				+ "\nPreço Unitário: " + c.getValor() + "\nTipo: " + c.getTipo() + "\n");
 	}
 	
 }
