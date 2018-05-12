@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 public class Item {
 
-	private int id;
+	private String id;
 	
 	@Size(min=5,message="O nome deve conter cinco carateres no mínimo.")
 	@Pattern(regexp = "^[A-Za-z]+$", message="O nome deve conter letras somente.")
@@ -18,12 +18,13 @@ public class Item {
 	private String tipo;
 	
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -48,6 +49,6 @@ public class Item {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
-			
+	
 }
+	

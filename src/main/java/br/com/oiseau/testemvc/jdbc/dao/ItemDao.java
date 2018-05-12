@@ -48,7 +48,7 @@ public class ItemDao {
 			while(rs.next()) {
 				Item item = new Item();
 				//popula o objeto contato
-				item.setId(rs.getInt("id"));
+				item.setId(rs.getString("id"));
 				item.setNome(rs.getString("nome"));
 				item.setDescricao(rs.getString("descricao"));
 				item.setValor(rs.getBigDecimal("valor"));
@@ -71,7 +71,7 @@ public class ItemDao {
 		String sql = "delete from itens where id=?";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setLong(1, item.getId());
+			stmt.setString(1, item.getId());
 			stmt.execute();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -86,7 +86,7 @@ public class ItemDao {
 			stmt.setString(2, item.getDescricao());
 			stmt.setBigDecimal(3, item.getValor());
 			stmt.setString(4, item.getTipo());
-			stmt.setLong(5, item.getId());
+			stmt.setString(5, item.getId());
 
 			stmt.execute();
 		} catch (SQLException e) {
@@ -94,20 +94,16 @@ public class ItemDao {
 		}
 	}
 	
-	public Item buscaPorId(long id) {
+	public Item buscaPorId(String id){
 		try {
-			PreparedStatement stmt = this.connection.prepareStatement("select * from itens where id="+id);
+		PreparedStatement stmt = this.connection.prepareStatement("select * from itens where id="+id);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			
-			/*
-			 * Inserir regra de tratamento no caso de não encontrar o Id informado.
-			 */
-				
+							
 				Item item = new Item();
 				
 				//popula o objeto contato
-				item.setId(rs.getInt("id"));
+				item.setId(rs.getString("id"));
 				item.setNome(rs.getString("nome"));
 				item.setDescricao(rs.getString("descricao"));
 				item.setValor(rs.getBigDecimal("valor"));
@@ -117,10 +113,10 @@ public class ItemDao {
 			stmt.close();
 			
 			return item;
-				
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 }

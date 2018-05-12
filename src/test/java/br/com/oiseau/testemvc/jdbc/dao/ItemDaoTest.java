@@ -51,7 +51,7 @@ public class ItemDaoTest {
 		System.out.println("Excluindo registro...");
 		
 		Item item=new Item();
-		item.setId(2);
+		item.setId("2");
 		
 		ItemDao itemDao=new ItemDao();
 		itemDao.exclui(item);
@@ -66,8 +66,7 @@ public class ItemDaoTest {
 		System.out.println("Atualizando item...");
 		
 		Item item=new Item();
-		item.setId(4);
-		
+		item.setId("4");
 		item.setNome("Anel");
 		item.setDescricao("de Ouro");
 		item.setValor(new BigDecimal("12.35"));
@@ -81,12 +80,22 @@ public class ItemDaoTest {
 	
 	@Test
 	public void deveBuscarPorId() {
+		try {
+			ItemDao itemDao = new ItemDao();
+			Item c = itemDao.buscaPorId("10");
+			
+			System.out.println("Id: " + c.getId() + "\nNome: " + c.getNome() + "\nDescrição: " + c.getDescricao()
+			+ "\nPreço Unitário: " + c.getValor() + "\nTipo: " + c.getTipo() + "\n");
+		}
+		catch(IllegalArgumentException e){
+			System.out.println("Argumento Inválido!");
+		}
+		catch(Exception e){
+			System.out.println("Não encontrado");
+		}
 
-		ItemDao itemDao = new ItemDao();
-		Item c = itemDao.buscaPorId(1);
 
-		System.out.println("Id: " + c.getId() + "\nNome: " + c.getNome() + "\nDescrição: " + c.getDescricao()
-				+ "\nPreço Unitário: " + c.getValor() + "\nTipo: " + c.getTipo() + "\n");
 	}
+	
 	
 }

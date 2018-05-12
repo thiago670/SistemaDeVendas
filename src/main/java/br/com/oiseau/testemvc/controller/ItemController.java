@@ -2,11 +2,14 @@ package br.com.oiseau.testemvc.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.oiseau.testemvc.jdbc.dao.ItemDao;
 import br.com.oiseau.testemvc.modelo.Item;
@@ -67,5 +70,21 @@ public class ItemController {
 		ItemDao itemDao=new ItemDao();
 		itemDao.atualiza(item);
 		return "redirect:ListaItens";
+	}
+	
+	@RequestMapping(value="AjaxRetornaItem", method=RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Item AjaxRetornaItem(@RequestParam("id") String id, Item item, Model model) {
+		try{
+			ItemDao itemDao = new ItemDao();
+			item = itemDao.buscaPorId(id);
+		}
+		catch(IllegalArgumentException e){
+			throw new Error("Test exception block");
+		}
+		catch(Exception e){
+			throw new Error("Test exception block");
+		}
+		return item;
 	}
 }
